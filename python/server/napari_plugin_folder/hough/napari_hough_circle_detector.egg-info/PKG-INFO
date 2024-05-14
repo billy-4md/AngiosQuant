@@ -1,0 +1,16 @@
+Metadata-Version: 2.1
+Name: napari-hough-circle-detector
+Version: 0.0.5
+Summary: An interactive Hough transform for napari.
+Author: Florian Aymanns
+Author-email: florian.aymanns@epfl.ch
+Maintainer: Florian Aymanns
+Maintainer-email: florian.aymanns@epfl.ch
+Keywords: napari,hough
+Classifier: Framework :: napari
+Description-Content-Type: text/markdown
+License-File: LICENSE
+
+# napari-hough-circle-detector
+
+A plugin for napari that detects circles using the Hough transform.

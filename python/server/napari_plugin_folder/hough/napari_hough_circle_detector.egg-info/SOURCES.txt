@@ -1,0 +1,12 @@
+LICENSE
+README.md
+pyproject.toml
+setup.cfg
+napari_hough_circle_detector/__init__.py
+napari_hough_circle_detector/napari.yaml
+napari_hough_circle_detector.egg-info/PKG-INFO
+napari_hough_circle_detector.egg-info/SOURCES.txt
+napari_hough_circle_detector.egg-info/dependency_links.txt
+napari_hough_circle_detector.egg-info/entry_points.txt
+napari_hough_circle_detector.egg-info/requires.txt
+napari_hough_circle_detector.egg-info/top_level.txt

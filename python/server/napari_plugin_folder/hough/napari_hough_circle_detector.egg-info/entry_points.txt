@@ -1,0 +1,2 @@
+[napari.manifest]
+napari-hough-circle-detector = napari_hough_circle_detector:napari.yaml

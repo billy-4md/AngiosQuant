@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>PopSeg - TAG Settings</title>
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="../css/styles.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="d-flex" id="wrapper">
+        <!-- Sidebar-->
+        <div class="border-end bg-white" id="sidebar-wrapper">
+            <div class="sidebar-heading border-bottom bg-light">PopSeg Menu</div>
+            <div class="list-group list-group-flush">
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="../index.html">Home</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="image_list.html">Project</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Settings</a>
+            </div>
+        </div>
+        <!-- Page content wrapper-->
+        <div id="page-content-wrapper">
+            <!-- Top navigation-->
+            <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+                <div class="container-fluid">
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <!-- Emplacement du statut -->
+                        <span id="processStatus"></span>
+                    </div>
+                </div>
+            </nav>
+            
+            <div class="container-fluid">
+                <!-- Settings - Image 1 -->
+                <div class="card mt-4">
+                    <div class="card-header" style="background-color: #D3E0EA;">
+                        <h3>Settings - Image 1</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group mb-3">
+                            <label for="image1PathInput">Image 1 path:</label>
+                            <input type="text" id="image1PathInput" class="form-control" placeholder="Enter path for Image 1">
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col">
+                                <label for="upperLayersToRemove1">Upper Layers to Remove:</label>
+                                <input type="number" id="upperLayersToRemove1" class="form-control" placeholder="0" min="0">
+                            </div>
+                            <div class="col">
+                                <label for="lowerLayersToRemove1">Lower Layers to Remove:</label>
+                                <input type="number" id="lowerLayersToRemove1" class="form-control" placeholder="0" min="0">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+                <!-- Settings - Image 2 -->
+                <div class="card mt-4">
+                    <div class="card-header" style="background-color: #D3E0EA;">
+                        <h3>Settings - Image 2</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group mb-3">
+                            <label for="image2PathInput">Image 2 path:</label>
+                            <input type="text" id="image2PathInput" class="form-control" placeholder="Enter path for Image 2">
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col">
+                                <label for="upperLayersToRemove2">Upper Layers to Remove:</label>
+                                <input type="number" id="upperLayersToRemove2" class="form-control" placeholder="0" min="0">
+                            </div>
+                            <div class="col">
+                                <label for="lowerLayersToRemove2">Lower Layers to Remove:</label>
+                                <input type="number" id="lowerLayersToRemove2" class="form-control" placeholder="0" min="0">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+                <!-- Cropping and Saving -->
+                <div class="card mt-4">
+                    <div class="card-header" style="background-color: #D3E0EA;">
+                        <h3>Configurations</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group mb-3">
+                            <label for="croppedvalue">Cropping image value (pixels):</label>
+                            <input type="number" id="croppedvalue" class="form-control" placeholder="0" min="0">
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="saveDirectoryInput">Project name to save:</label>
+                            <input type="text" id="saveDirectoryInput" class="form-control" placeholder="Enter project name to save images">
+                        </div>
+                        <div class="form-check mb-2">
+                            <input type="checkbox" id="saveAllImages" class="form-check-input">
+                            <label class="form-check-label" for="saveAllImages">Save all images</label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input type="checkbox" id="automaticMerging" class="form-check-input">
+                            <label class="form-check-label" for="automaticMerging">Automatic merging</label>
+                        </div>
+                    </div>
+                </div>
+                <!-- Image Tags -->
+                <div class="card mt-4">
+                    <div class="card-header" style="background-color: #D3E0EA;">
+                        <h3>TAGs Configurations</h3>
+                    </div>
+                    <div class="card-body">
+                        <div id="image1Tags">
+                            <h4>Image 1 TAGs</h4>
+                            <div id="tagsImage1" class="tags-container mb-3"></div>
+                            <button onclick="addTag('1')" class="btn btn-primary">Add TAG</button>
+                        </div>
+                        <div id="image2Tags" class="mt-4">
+                            <h4>Image 2 TAGs</h4>
+                            <div id="tagsImage2" class="tags-container mb-3"></div>
+                            <button onclick="addTag('2')" class="btn btn-primary">Add TAG</button>
+                        </div>
+                        <div id="menuphalo" class="mt-4">
+                            <h4>Phalloidin TAG selection</h4>
+                            <label for="phalloidinTagDropdown">Select corresponding TAG for Phalloidin:</label>
+                            <select id="phalloidinTagDropdown" class="form-control">
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+            
+                <!-- Save Button -->
+                <div class="text-center mt-4 mb-4">
+                    <button id="saveSettings" class="btn btn-success">Save Settings</button>
+                </div>
+
+                <!-- Start segmentation Button -->
+                <div class="text-center mt-4 mb-4">
+                    <button id="startSegmentation" class="btn btn-dark">Start segmentation</button>
+                </div>            
+            </div>
+                    
+        </div>
+        
+    </div>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Script for handling dynamic TAG addition/removal -->
+    <script src="../js/settings.js"></script>
+</body>
+</html>
+

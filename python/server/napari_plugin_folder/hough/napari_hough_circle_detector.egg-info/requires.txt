@@ -1,0 +1,5 @@
+napari[all]
+opencv-contrib-python-headless
+numpy
+pyqt5
+scikit-image

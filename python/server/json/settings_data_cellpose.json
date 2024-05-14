@@ -1,0 +1,31 @@
+{
+    "image1": {
+        "path": "D:\\Users\\MFE\\Xavier\\Images\\8.if1.czi",
+        "tags": {
+            "TAG1": "647",
+            "TAG2": "546",
+            "TAG3": "Unknown",
+            "TAG4": "488"
+        },
+        "upperLayersToRemove": 10,
+        "lowerLayersToRemove": 15
+    },
+    "image2": {
+        "path": "D:\\Users\\MFE\\Xavier\\Images\\8.if2.czi",
+        "tags": {
+            "TAG4": "Unknown",
+            "TAG5": "546",
+            "TAG6": "647",
+            "TAG7": "488"
+        },
+        "upperLayersToRemove": 20,
+        "lowerLayersToRemove": 15
+    },
+    "configuration": {
+        "saveAllImages": true
+    },
+    "populations": {},
+    "process": "Yes",
+    "croppingValue": 250,
+    "project_name": "Result_Rapport"
+}

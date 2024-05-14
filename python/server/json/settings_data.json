@@ -1,0 +1,33 @@
+{
+    "image1": {
+        "path": "D:\\Users\\MFE\\Xavier\\Images\\8.if1.czi",
+        "tags": {
+            "TAG1": "647",
+            "TAG2": "546",
+            "TAG3": "Unknown",
+            "TAG4": "488"
+        },
+        "upperLayersToRemove": 10,
+        "lowerLayersToRemove": 15
+    },
+    "image2": {
+        "path": "D:\\Users\\MFE\\Xavier\\Images\\8.if2.czi",
+        "tags": {
+            "TAG5": "Unknown",
+            "TAG6": "546",
+            "TAG7": "647",
+            "TAG8": "488"
+        },
+        "upperLayersToRemove": 20,
+        "lowerLayersToRemove": 15
+    },
+    "configuration": {
+        "saveAllImages": true,
+        "automaticMerging": false
+    },
+    "populations": {},
+    "process": "Yes",
+    "croppingValue": 400,
+    "project_name": "Paper_dsb",
+    "phaloTag": "4"
+}
