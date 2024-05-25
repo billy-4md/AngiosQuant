@@ -5,14 +5,21 @@ This project was developed as part of a Master Thesis in Civil Engineering with 
 
 ## Structure of the project
 In the "master" branch, all the code of this project is available. And it is structures in 3 main folders:
-- node_modules: contains all the files necessary to run and to package this application. This application was made with [Electron.js](https://github.com/electron/electron)
-- python: Contains all the python code in order to run all the features available in the available such as merging images, segmentation or data extraction. It is also in this folder that all the images of the different project will be saved. It is the heart of the project as it contains the Flask server, which can create the bridge between the frontend and backend.
+- **node_modules**: contains all the files necessary to run and to package this application. This application was made with [Electron.js](https://github.com/electron/electron)
+- **python**: Contains all the python code in order to run all the features available in the available such as merging images, segmentation or data extraction. It is also in this folder that all the information are stored and it is divided in different parts:
   - "bin": This folder contains all the python library in order to run the code. No python installation are necessary on the computer as everything is contained inside the application.
   - "server": It is divided into several parts as well:
-    - "app.py": Flask server.
+    - "app.py": This script is the main python script as it will start the Flask server, used to create the bridge between the frontend and backend.
     - "project": All the information such as images, json,... of a specific project will be store there.
     - "json": All the json files that contain some information important for the application.
-- web: Contains all the file for the interface of the application.
+    - "napari_plugin_folder": Contains the plugin for Napari and Hough Transform, added in the Napari viewer, which is added to the application to visualize the different images.
+    - "code_brouillon": Contains all the old version of the python scripts.
+    - "auto_merge.py": Main python script to run the automatic merging process.
+    - "semi_auto_merge.py": Main python script to run the semi-automatic merging process.
+    - "find_pop.py": Main script to generate the excel file, containent the matching population for each cell whithin the image as well as segmented the phalloidin tag.
+    - "utils.py" & "segmentations_tool.py": Contains some fonctions that are used in different scripts.
+    - "napari_launcher.py": Main python script to start the Napari visualizer.
+- **web**: Contains all the file for the interface of the application.
 
 ## Features
 PopSeg offers a variety of features organized into several key components of the application:
