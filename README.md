@@ -7,6 +7,11 @@ This project was developed as part of a Master Thesis in Civil Engineering with 
 In the "master" branch, all the code of this project is available. And it is structures in 3 main folders:
 - node_modules: contains all the files necessary to run and to package this application. This application was made with [Electron.js](https://github.com/electron/electron)
 - python: Contains all the python code in order to run all the features available in the available such as merging images, segmentation or data extraction. It is also in this folder that all the images of the different project will be saved. It is the heart of the project as it contains the Flask server, which can create the bridge between the frontend and backend.
+- "bin": This folder contains all the python library in order to run the code. No python installation are necessary on the computer as everything is contained inside the application.
+- "server": It is divided into several parts as well:
+- "app.py": Flask server.
+- "project": All the information such as images, json,... of a specific project will be store there.
+- "json": All the json files that contain some information important for the application.
 - web: Contains all the file for the interface of the application.
 
 ## Features
