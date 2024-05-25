@@ -1,7 +1,13 @@
 # PopSeg Tool
 
 ## Introduction
-This project was developed as part of a Master Thesis in Civil Engineering with a biomedical specialization at ULB (Université Libre de Bruxelles), under the guidance of Professor Olivier Debeir and Egor Zindy. The complete report for this project is available in the "PDF" folder. **PopSeg** is a sophisticated tool designed for processing and analyzing microscopic cellular images, particularly within the scope of multiplex immunostaining experiments. It offers an intuitive user interface and various features that simplify the analysis process, mainly designed for researchers and professionals in cellular biology.
+This project was developed as part of a Master Thesis in Civil Engineering with a biomedical specialization at ULB (Université Libre de Bruxelles), under the guidance of Professor Olivier Debeir and Egor Zindy. The complete report for this project is available in the "PDF" folder. **PopSeg** is a tool designed for processing and analyzing microscopic cellular images, particularly within the scope of multiplex immunostaining experiments. It offers an intuitive user interface and various features that simplify the analysis process, mainly designed for researchers and professionals in cellular biology.
+
+## Structure of the project
+In the "master" branch, all the code of this project is available. And it is structures in 3 main folders:
+- node_modules: contains all the files necessary to run and to package this application. This application was made with [Electron.js](https://github.com/electron/electron)
+- python: Contains all the python code in order to run all the features available in the available such as merging images, segmentation or data extraction. It is also in this folder that all the images of the different project will be saved. It is the heart of the project as it contains the Flask server, which can create the bridge between the frontend and backend.
+- web: Contains all the file for the interface of the application.
 
 ## Features
 PopSeg offers a variety of features organized into several key components of the application:
