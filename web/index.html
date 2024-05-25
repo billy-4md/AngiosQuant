@@ -1,60 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title>PopSeg</title>
-        <!-- Favicon-->
-        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-        <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="css/styles.css" rel="stylesheet" />
-    </head>
-    <body>
-        <div class="d-flex" id="wrapper">
-            <!-- Sidebar-->
-            <div class="border-end bg-white" id="sidebar-wrapper">
-                <div class="sidebar-heading border-bottom bg-light">PopSeg Menu</div>
-                <div class="list-group list-group-flush">
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="index.html">Home</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="html/image_list.html">Project</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="html/settings.html">Settings</a>
-                </div>
-            </div>
-            <!-- Page content wrapper-->
-            <div id="page-content-wrapper">
-                <!-- Top navigation-->
-                <!-- <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-                    <div class="container-fluid">
-                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                            <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
-                                <li class="nav-item active"><a class="nav-link" href="#!">Home</a></li>
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-                                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="#!">Action</a>
-                                        <a class="dropdown-item" href="#!">Another action</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#!">Something else here</a>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </nav> -->
-                <!-- Page content-->
-                <div class="container-fluid text-center">
-                    <h1 class="mt-4">Welcome in PopSeg Tool! </h1>
-                    <p> TO DO : MAKE A BRIEF EXPLANAITION OF THE TOOL</p>
-                </div>                
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="PopSeg: A tool for image processing and data analysis." />
+    <meta name="author" content="Your Name" />
+    <title>PopSeg</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="css/styles.css" rel="stylesheet" />
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            padding: 20px;
+        }
+        h1, h3 {
+            color: #0056b3;
+            font-weight: bold;
+        }
+        p, li {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #666;
+        }
+        ul {
+            text-align: left;
+            padding-left: 20px;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .section {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            padding: 20px;
+        }
+        img {
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            margin-top: 15px;
+            margin-bottom: 15px;
+            width: 25%; /* Responsive image */
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="d-flex" id="wrapper">
+        <!-- Sidebar-->
+        <div class="border-end bg-white" id="sidebar-wrapper">
+            <div class="sidebar-heading border-bottom bg-light">PopSeg Menu</div>
+            <div class="list-group list-group-flush">
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="index.html">Home</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="html/image_list.html">Project</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="html/settings.html">Settings</a>
             </div>
         </div>
-        <!-- Bootstrap core JS-->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Core theme JS-->
-        <script src="js/control.js"></script>
-        <script src="js/scripts.js"></script>
-    </body>
+
+        <!-- Page content-->
+        <div id="page-content-wrapper">
+            <div class="container-fluid text-center">
+                <div class="section">
+                    <h1>Welcome to the PopSeg Tool!</h1>
+                    <p>This application helps with the analysis and visualization of cellular images. Here's how to get started:</p>
+                </div>
+
+                <div class="section">
+                    <h3>Initial Setup</h3>
+                    <p>Begin by navigating to the <strong>Settings</strong> tab to configure the application settings. Ensure all configurations are saved before proceeding.</p>
+                </div>
+
+                <div class="section">
+                    <h3>Creating a New Project</h3>
+                    <p>Go to the <strong>Project</strong> tab to create a new project. Here, you can upload images directly into the project for processing.</p>
+                </div>
+
+                <div class="section">
+                    <h3>Control Point Setting - Semi-Automatic Merging</h3>
+                    <p>This step is necessary if the semi-automatic algorithm has been selected in the "Settings" file. Run a first time the algorithm, it will produced the new images "full_image1.tif" and "full_image2.tif" based on the settings information. On those images, the control could be set and then re run the algorithm.</p>
+                    <ul>
+                        <li>Select the project and click on the images to open them.</li>
+                        <li>Navigate to "Set Control Points" from the navigation bar.</li>
+                        <li>Switch to 2D view by clicking the cube icon on the bottom left.</li>
+                        <img src="assets/2d_view.png" alt="TEST" />
+                        <li>Add control points by selecting the "+" symbol and clicking on the image.</li>
+                        <img src="assets/add_ctrl_points.png" alt="TEST" />
+                        <li>Press "s" to save the points. A confirmation will appear in the bottom left corner.</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h3>Running Programs</h3>
+                    <ul>
+                        <li><b>Start Merging:</b> Fuse images based on settings for generating new images</li>
+                            <ul>
+                                <li><b>Automatic:</b> Nothing has to been done besides completing the settings</li>
+                                <li><b>Semi-Automatic:</b> Need to run it twice. First time, the processed images will be added to the project. At this point, the control points must be set and then run it a second time to complete the merging process.</li>
+                            </ul>
+                        <li><b>Generate Excel:</b> Generate a file containing the cell populations matching and other information on the nuclei (oritentation, circularity or position). It is also at this point that the phalloidin TAG will be analyzed.</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h3>Project Information and Outputs</h3>
+                    <p>Each project has a "Show Project Info" button which displays values obtained from analysis runs. Adjust these values in the Excel file to test different configurations.</p>
+                </div>
+
+                <div class="section">
+                    <h3>More information</h3>
+                    <p>If more information is necessary, click on <a href="https://github.com/xdekeme/MasterThesis" target="_blank">this link</a> to visit the GitHub page of this project.</p>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <!-- Bootstrap and other scripts remain unchanged -->
+</body>
 </html>

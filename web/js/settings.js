@@ -8,19 +8,52 @@ document.addEventListener("DOMContentLoaded", function() {
     .catch(error => console.error('Error:', error));
 });
 
+// Fonction pour afficher un message temporaire
+function showPopup(message, timeout = 3000) {
+    // Trouver ou créer le conteneur du message
+    let popupContainer = document.getElementById('popup-container');
+    if (!popupContainer) {
+        popupContainer = document.createElement('div');
+        popupContainer.id = 'popup-container';
+        popupContainer.style.position = 'fixed';
+        popupContainer.style.bottom = '20px';
+        popupContainer.style.right = '20px';
+        popupContainer.style.padding = '10px';
+        popupContainer.style.backgroundColor = 'rgba(0, 128, 0, 0.8)'; // Couleur de fond avec transparence
+        popupContainer.style.color = 'white';
+        popupContainer.style.borderRadius = '5px';
+        popupContainer.style.zIndex = 10000;
+        popupContainer.style.boxShadow = '0px 0px 10px rgba(0, 0, 0, 0.5)';
+        document.body.appendChild(popupContainer);
+    }
 
-document.getElementById('startSegmentation').addEventListener('click', function() {
-    save_settings(); 
+    // Mettre à jour le texte du message
+    popupContainer.textContent = message;
+
+    // Rendre le message visible
+    popupContainer.style.display = 'block';
+
+    // Cacher le message après le délai défini
+    setTimeout(() => {
+        popupContainer.style.display = 'none';
+    }, timeout);
+}
+
+
+
+// document.getElementById('startSegmentation').addEventListener('click', function() {
+//     save_settings(); 
     
-    fetch('http://localhost:8000/start_segmentation')
-    .then(response => response.json())
-    .then(data => console.log('Success:', data))
-    .catch(error => console.error('Error:', error));
+//     fetch('http://localhost:8000/start_segmentation')
+//     .then(response => response.json())
+//     .then(data => console.log('Success:', data))
+//     .catch(error => console.error('Error:', error));
 
-});
+// });
 
 document.getElementById('saveSettings').addEventListener('click', function() {
     save_settings();    
+    showPopup("Settings have been saved!")
 });
 
 function save_settings(){
@@ -40,15 +73,9 @@ function save_settings(){
 
     const saveAllImages = document.getElementById('saveAllImages').checked;
     const automaticMerging = document.getElementById('automaticMerging').checked;
+    const useTagCenter = document.getElementById('useTagCenter').checked;
 
     const phalloidinTag = document.getElementById('phalloidinTagDropdown').value;
-
-    let process_running = document.getElementById('processStatus').textContent;
-    if (process_running == "No process running"){
-        process_running = "None";
-    } else {
-        process_running = "Yes";
-    }
 
     // const populations = collectPopulations();
     // const hasDuplicateTags = populations.some(population => {
@@ -77,10 +104,10 @@ function save_settings(){
         },
         configuration: {
             saveAllImages: saveAllImages,
-            automaticMerging: automaticMerging
+            automaticMerging: automaticMerging,
+            useTagCenter: useTagCenter
         },
         //populations: populations_dico,
-        process: process_running,
         croppingvalue: croppingvalue,
         saveDirectory: saveDirectory,
         phaloTag: phalloidinTag
@@ -296,11 +323,8 @@ function updatePopulationLabels() {
 
 
 function fillFormWithData(data) {
-    if (!data || data.process === "None" || !data.process) {
-        document.getElementById('processStatus').textContent = "No process running";
-    }
-    if (data.process == "Yes") {
-        document.getElementById('processStatus').textContent = "Process running";
+    if (data.process) {
+        document.getElementById('processStatus').textContent = data.process;
     }
     if (data.image1 && data.image1.path) {
         document.getElementById('image1PathInput').value = data.image1.path;
@@ -330,12 +354,18 @@ function fillFormWithData(data) {
             document.getElementById('automaticMerging').checked = true;
         }
     }
+    if (data.configuration && data.configuration.useTagCenter) {
+        if (document.getElementById('useTagCenter').value){
+            document.getElementById('useTagCenter').checked = true;
+        }
+    }
     if (data.croppingValue) {
         document.getElementById('croppedvalue').value = data.croppingValue;
     }
     if (data.project_name) {
         document.getElementById('saveDirectoryInput').value = data.project_name;
     }
+   
     // Tags Image 1
     if (data.image1 && data.image1.tags) {
         Object.entries(data.image1.tags).forEach(([tag, wavelength], index) => {
@@ -365,5 +395,9 @@ function fillFormWithData(data) {
                 selectElement.value = tag;
             });
         });
+    }
+
+    if (data.phaloTag) {
+        document.getElementById('phalloidinTagDropdown').value = data.phaloTag;
     }
 }

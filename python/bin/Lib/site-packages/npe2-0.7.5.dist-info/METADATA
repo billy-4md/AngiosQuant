@@ -1,0 +1,93 @@
+Metadata-Version: 2.3
+Name: npe2
+Version: 0.7.5
+Summary: napari plugin engine v2
+Project-URL: homepage, https://github.com/napari/npe2
+Project-URL: repository, https://github.com/napari/npe2
+Author: Nathan Clack
+Author-email: Talley Lambert <talley.lambert@gmail.com>
+License: BSD-3-Clause
+License-File: LICENSE
+Classifier: Development Status :: 3 - Alpha
+Classifier: License :: OSI Approved :: BSD License
+Classifier: Natural Language :: English
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Typing :: Typed
+Requires-Python: >=3.8
+Requires-Dist: appdirs
+Requires-Dist: build>=1
+Requires-Dist: psygnal>=0.3.0
+Requires-Dist: pydantic
+Requires-Dist: pyyaml
+Requires-Dist: rich
+Requires-Dist: tomli-w
+Requires-Dist: tomli; python_version < '3.11'
+Requires-Dist: typer
+Provides-Extra: dev
+Requires-Dist: black; extra == 'dev'
+Requires-Dist: ipython; extra == 'dev'
+Requires-Dist: isort; extra == 'dev'
+Requires-Dist: mypy; extra == 'dev'
+Requires-Dist: pre-commit; extra == 'dev'
+Provides-Extra: docs
+Requires-Dist: jinja2; extra == 'docs'
+Requires-Dist: magicgui>=0.3.3; extra == 'docs'
+Provides-Extra: json
+Requires-Dist: jsonschema; extra == 'json'
+Provides-Extra: testing
+Requires-Dist: jsonschema; extra == 'testing'
+Requires-Dist: magicgui; extra == 'testing'
+Requires-Dist: napari-plugin-engine; extra == 'testing'
+Requires-Dist: napari-svg==0.1.5; extra == 'testing'
+Requires-Dist: numpy; extra == 'testing'
+Requires-Dist: pytest; extra == 'testing'
+Requires-Dist: pytest-cov; extra == 'testing'
+Requires-Dist: pytest-pretty; extra == 'testing'
+Description-Content-Type: text/markdown
+
+# npe2
+
+[![CI](https://github.com/napari/npe2/actions/workflows/ci.yml/badge.svg)](https://github.com/napari/npe2/actions/workflows/ci.yml)
+[![codecov](https://codecov.io/gh/napari/npe2/branch/main/graph/badge.svg?token=FTH635x542)](https://codecov.io/gh/napari/npe2)
+
+napari plugin refactor
+
+see also https://github.com/napari/napari/issues/3115
+
+## Documentation
+
+For documentation on authoring npe2 plugins, see the [napari plugin docs](https://napari.org/plugins/index.html).  These include:
+- the [manifest reference](https://napari.org/plugins/manifest.html)
+- the [contribution guide](https://napari.org/plugins/contributions.html)
+
+## Command line tool
+
+Includes a command line tool `npe2` with the following commands:
+```bash
+Commands:
+  cache     Cache utils
+  convert   Convert first generation napari plugin to new (manifest) format.
+  parse     Show parsed manifest as yaml
+  validate  Validate manifest for a distribution name or manifest filepath.
+```
+
+examples:
+
+```bash
+# convert current directory to an npe2-ready plugin
+# (note: the repo must also be installed and importable in the current environment)
+npe2 convert .
+```
+
+```bash
+npe2 validate your-plugin-package
+```
+
+```bash
+npe2 parse your-plugin-package
+```

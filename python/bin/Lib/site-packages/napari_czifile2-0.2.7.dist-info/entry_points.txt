@@ -1,0 +1,2 @@
+[napari.manifest]
+napari-czifile2 = napari_czifile2:napari.yaml

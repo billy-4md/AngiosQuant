@@ -254,7 +254,8 @@ function saveProjectInfo(projectName) {
     const updatedInfo = {};
     inputs.forEach(input => {
         const key = input.id.replace('input-', '');
-        updatedInfo[key] = input.value.split(',').map(item => item.trim());  
+        // Store the value as is, just trimming whitespace
+        updatedInfo[key] = input.value.trim();
     });
 
     fetch(`http://localhost:8000/update_project_info/${projectName}`, {
@@ -271,6 +272,33 @@ function saveProjectInfo(projectName) {
 }
 
 
+function mergeFunction(){
+    console.log("Merge OK");
+    fetch(`http://localhost:8000/merge_function/${currentProject}?`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                showPopup(data.message)
+            } else {
+                console.error('Error:', data.message);
+            }
+        })
+        .catch(error => console.error('Error:', error));
+}
+
+function matchPopulationFunction(){
+    console.log("Pop OK");
+    fetch(`http://localhost:8000/generate_excel_function/${currentProject}?`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                showPopup(data.message)
+            } else {
+                console.error('Error:', data.message);
+            }
+        })
+        .catch(error => console.error('Error:', error));
+}
 
 
 
@@ -368,7 +396,6 @@ function uploadImage(file) {
     .catch(error => console.error('Error:', error));
 }
 
-
 function uploadFunction(){
     if (currentProject == "") {
         return;
@@ -377,6 +404,7 @@ function uploadFunction(){
     document.getElementById('file-input').addEventListener('change', function(event) {
         const files = event.target.files;
         uploadImage(files[0]);
+        showPopup("Upload success!")
     });
 }
 
@@ -401,10 +429,8 @@ function visualizeFunction() {
     } else {
         if (selectedImages.length > 0) {
             const imageNamesString = selectedImages.join(',');
-
-            // Utilisez URLSearchParams pour un encodage correct
             const params = new URLSearchParams({
-                image_names: imageNamesString, // Pas besoin d'encodeURIComponent ici
+                image_names: imageNamesString, 
                 control_points: false
             });
 
@@ -413,6 +439,7 @@ function visualizeFunction() {
                 .then(data => {
                     if (data.success) {
                         console.log('Napari launched for images:', imageNamesString);
+                        showPopup('Launching Napari...');
                     } else {
                         console.error('Error:', data.message);
                     }
@@ -430,6 +457,7 @@ function visualizeFunction() {
                 .then(data => {
                     if (data.success) {
                         console.log('Excel files opened:', excelFilesString);
+                        showPopup('Launching Excel...');
                     } else {
                         console.error('Error:', data.message);
                     }

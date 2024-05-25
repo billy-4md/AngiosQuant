@@ -7,8 +7,12 @@ from flask_cors import CORS
 import subprocess
 import threading
 import multiprocessing
+
 from napari_launcher import launch_napari_def
-from general_script import launch_segmentation_process
+from auto_merge import main_auto_merge
+from semi_auto_merge import main_semi_auto_merge
+from find_pop import main_find_pop
+
 
 
 app = Flask(__name__)
@@ -18,8 +22,7 @@ CORS(app, origins='*', support_credentials=True)
 
 
 resources_path = os.environ.get('FLASK_RESOURCES_PATH', os.getcwd())
-#PROJECT_FOLDER = os.path.join(resources_path, 'python', 'server', 'project')
-PROJECT_FOLDER = "D:\\Users\\MFE\\Xavier"
+PROJECT_FOLDER = os.path.join(resources_path, 'python', 'server', 'project')
 JSON_FOLDER = os.path.join(resources_path, 'python', 'server', 'json')
 app.config['PROJECT_FOLDER'] = PROJECT_FOLDER
 app.config['JSON_FOLDER'] = JSON_FOLDER
@@ -163,7 +166,31 @@ def launch_napari(project_name):
 
     return jsonify(success=True, message="Napari launched for provided images")
 
+@app.route('/merge_function/<project_name>')
+def merge_function(project_name):
+    settings_file = os.path.join(JSON_FOLDER, 'settings_data.json')
+    
+    if os.path.exists(settings_file):
+        with open(settings_file, 'r') as f:
+            settings_data = json.load(f)
+        
+        auto_merging = settings_data["configuration"]["automaticMerging"]
+        if auto_merging:
+            multiprocessing.Process(target=main_auto_merge, args=(project_name,)).start()
+            return jsonify(success=True, message="Merge automatic function launched")
+        else:
+            multiprocessing.Process(target=main_semi_auto_merge, args=(project_name,)).start()
+            return jsonify(success=True, message="Merge semi-automatic function launched")   
+    else:
+        return jsonify({"error": "Settings not available"}),
 
+@app.route('/generate_excel_function/<project_name>')
+def generate_excel_function(project_name):
+    multiprocessing.Process(target=main_find_pop, args=(project_name,)).start()
+    return jsonify(success=True, message="Generated excel function launched")
+
+
+    
 @app.route('/open_excel_files/<project_name>', methods=['GET'])
 def open_excel_files(project_name):
     excel_files = request.args.get('excel_files')
@@ -268,10 +295,10 @@ def save_settings():
         },
         "configuration": {
             "saveAllImages": request_data.get('configuration', {}).get('saveAllImages', ''),
-            "automaticMerging": request_data.get('configuration', {}).get('automaticMerging', '')
+            "automaticMerging": request_data.get('configuration', {}).get('automaticMerging', ''),
+            "useTagCenter": request_data.get('configuration', {}).get('useTagCenter', '')
         },
         "populations": request_data.get('populations', {}),
-        "process": request_data.get('process', ""),
         "croppingValue": request_data.get('croppingvalue', {}),
         "project_name": request_data.get('saveDirectory', "Default_Name"),
         "phaloTag": request_data.get('phaloTag', "")

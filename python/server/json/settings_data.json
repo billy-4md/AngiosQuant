@@ -23,11 +23,12 @@
     },
     "configuration": {
         "saveAllImages": true,
-        "automaticMerging": false
+        "automaticMerging": false,
+        "useTagCenter": true
     },
     "populations": {},
-    "process": "Yes",
     "croppingValue": 400,
-    "project_name": "Paper_dsb",
-    "phaloTag": "4"
+    "project_name": "Auto_merging",
+    "phaloTag": "4",
+    "process": "Find population process running"
 }
