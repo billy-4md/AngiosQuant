@@ -19,7 +19,10 @@ In the "master" branch, all the code of this project is available. And it is str
     - "find_pop.py": Main script to generate the excel file, containent the matching population for each cell whithin the image as well as segmented the phalloidin tag.
     - "utils.py" & "segmentations_tool.py": Contains some fonctions that are used in different scripts.
     - "napari_launcher.py": Main python script to start the Napari visualizer.
-- **web**: Contains all the file for the interface of the application.
+- **web**: Contains all the file for the interface of the application and is divided in different parts:
+  - "html": Contain all the HTML file for the application.
+  - "js": Contain all the JavaScript file for the application, creating the requests on the Flask server to run the python code.
+  - "css": COntain all the file for the style of the application.
 
 ## Features
 PopSeg offers a variety of features organized into several key components of the application:
