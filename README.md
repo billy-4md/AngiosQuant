@@ -25,10 +25,11 @@ In the "master" branch, all the code of this project is available. And it is str
   - "css": COntain all the file for the style of the application.
 
 ## Features
-PopSeg offers a variety of features organized into several key components of the application:
+This application offers a variety of features organized into several key components of the application:
 
 ### Settings
 - Configure application settings in the **Settings** tab.
+- In this place, several settings must be set in order to run the different program proprely. 
 - Ensure all configurations are saved before proceeding to other sections.
 
 ### Project Management
@@ -36,6 +37,7 @@ PopSeg offers a variety of features organized into several key components of the
 - Upload images directly into projects for processing.
 
 ### Semi-Automatic Control Point Setup
+This part is necessary if you need to run the semi-automatic algorithm. It allows to select, manually using "control points", corresponding to cell that can be seen on both images. If this option is selected, the algorithm must be run twice. The first time, it will juste add the images processed on your project. After having those images, you can set the control points, and then re run the program. Previous control points that have been set will be automatically visible and can be modify.
 - If "Semi-Automatic" mode is selected, specify control points on original images.
 - Access control points setting through the project page by selecting images and using the "Set Control Points" option in the navigation bar.
 - Transition to 2D view for precise control point placement and save settings with keyboard shortcuts.
@@ -52,21 +54,8 @@ PopSeg offers a variety of features organized into several key components of the
 ## Getting Started
 To get started with PopSeg, navigate to the `Settings` tab and configure the necessary settings. Create a new project in the `Project` tab and upload your images. Depending on your settings, you may need to set control points manually in the images for accurate processing.
 
-## Semi-Automatic Mode Instructions
-For projects running in semi-automatic mode, follow these steps to set control points:
-1. Select your project and open the images.
-2. Go to "Set Control Points" in the top navigation bar.
-3. Switch to 2D view by clicking the cube icon on the bottom left of the interface.
-4. Add points by clicking on the image with the "+" icon.
-5. Save the points by pressing "s" on your keyboard; a confirmation message will appear.
-
 ## Output
 The tool can generate images and Excel files depending on the selected options:
 - Open images in the Napari viewer or view Excel files directly from the project page.
-
-## Additional Help
-For more detailed information and troubleshooting, refer to our [GitHub wiki](https://github.com/YourGitHubUsername/PopSeg/wiki) or issues section.
-
-Thank you for choosing PopSeg for your image analysis needs!
 
 
