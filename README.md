@@ -1,7 +1,7 @@
 # PopSeg Tool
 
 ## Introduction
-**PopSeg** is an advanced image processing and analysis tool designed to assist with the visualization and analysis of cellular images. This tool provides an intuitive interface and powerful features to streamline the analysis process, making it ideal for researchers and professionals in the field of cellular biology.
+This project was developed as part of a Master Thesis in Civil Engineering with a biomedical specialization at ULB (Université Libre de Bruxelles), under the guidance of Professor Olivier Debeir and Egor Zindy. The complete report for this project is available in the "PDF" folder. **PopSeg** is a sophisticated tool designed for processing and analyzing microscopic cellular images, particularly within the scope of multiplex immunostaining experiments. It offers an intuitive user interface and various features that simplify the analysis process, mainly designed for researchers and professionals in cellular biology.
 
 ## Features
 PopSeg offers a variety of features organized into several key components of the application:
