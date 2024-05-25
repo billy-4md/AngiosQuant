@@ -8,8 +8,8 @@ const IS_DEV = !app.isPackaged;
 
 function createMainWindow() {
   const winMain = new BrowserWindow({
-    width: 1000,
-    height: 600,
+    width: 1200,
+    height: 800,
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
@@ -17,16 +17,13 @@ function createMainWindow() {
       enableRemoteModule: false,
     }
   });
-
-  //process.env.FLASK_RESOURCES_PATH = process.resourcesPath
-  process.env.FLASK_RESOURCES_PATH = __dirname;
+  process.env.FLASK_RESOURCES_PATH = IS_DEV ? __dirname : process.resourcesPath;
   startFlaskApp(winMain);
 }
 
 function startFlaskApp(winMain) {
-  //const pythonPath = findPython();
-  const pythonPath = "C:\\Users\\MFE\\.conda\\envs\\xavier2\\python.exe";
-  const scriptPath = IS_DEV ? path.join(__dirname, "python/server/app.py") : path.join(process.resourcesPath, "python/server/app.py");
+  const pythonPath = findPython();
+  const scriptPath = IS_DEV ? path.join(__dirname, "python", "server", "app.py") : path.join(process.resourcesPath, "python", "server", "app.py");
   flaskProcess = cp.spawn(pythonPath, [scriptPath]);
 
   const handleFlaskOutput = (data) => {
@@ -69,8 +66,8 @@ app.on('quit', () => {
 
 function findPython() {
   const possibilities = [
-    path.join(__dirname, "python", "bin", "python3"), // Path in development
-    path.join(process.resourcesPath, "python", "bin", "python3"), 
+    path.join(__dirname, "python", "bin", "python.exe"), // Path in development
+    path.join(process.resourcesPath, "python", "bin", "python.exe"), 
   ];
 
   
@@ -86,40 +83,3 @@ function findPython() {
 
 
 
-
-// function createSetupWindow() {
-  //   winSetup = new BrowserWindow({
-  //     width: 400,
-  //     height: 200,
-  //     webPreferences: {
-  //       nodeIntegration: true,
-  //       contextIsolation: false
-  //     }
-  //   });
-  
-  //   winSetup.loadFile('html/setup.html');
-  //   startFlaskApp();
-  // }
-  
-  // function runInstallScript() {
-  //   const installProcess = spawn('python3', ['server/install.py']);
-  
-  //   installProcess.stdout.on('data', (data) => {
-  //     console.log(`stdout (Install): ${data.toString()}`);
-  //   });
-  
-  //   installProcess.stderr.on('data', (data) => {
-  //     console.error(`stderr (Install): ${data.toString()}`);
-  //   });
-  
-  //   installProcess.on('close', (code) => {
-  //     if (code === 0) {
-  //       console.log('Package installation succeeded.');
-  //       winSetup.close(); 
-  //       winSetup = null;
-  //       createMainWindow(); 
-  //     } else {
-  //       console.error(`Package installation failed with code: ${code}`);
-  //     }
-  //   });
-  // }

@@ -86,17 +86,16 @@ def is_close(center1, center2, percent, z_weight):
     distance = np.sqrt(((center1[0]*z_weight - center2[0]*z_weight)**2) + (center1[1] - center2[1])**2 + (center1[2] - center2[2])**2)
     return distance <= threshold
 
-def generate_csv(threshold, z_weight, tag_center, project_info):
+def generate_csv(threshold, z_weight, tag_center):
     with open(os.path.join(json_path, "proteins_name.json"), "r") as f:
         protein_names = json.load(f)
 
     tags = [tag for tag in tag_center.keys() if tag != "merged_img" and tag != "image1" and tag != "image2" and tag != "phalo"]
-    columns = ["CellID"] + tags + ["Population", "Protein Name", "Circularity", "Eccentricity", "Orientation", "Away from bead", "Center X", "Center Y"]
+    columns = ["CellID"] + tags + ["Population", "Protein Name", "Circularity", "Eccentricity", "Orientation", "Center X", "Center Y"]
     data = []
     false_positive_cells = []
 
     label_img = imageio.volread(os.path.join(project_path, 'label_merged_img.tif'))
-    label_nuclei_dist = keep_dist_nuclei(label_img, tag_center, project_info)
     label_properties = project_and_analyze_labels(label_img)
 
     for cell_id, center in enumerate(tag_center["merged_img"].values(), start=1):
@@ -121,12 +120,9 @@ def generate_csv(threshold, z_weight, tag_center, project_info):
             population = ''.join([tag[-1] for tag in tags if row[columns.index(tag)] == 1])
             protein_name = protein_names.get(population, "")
 
-        distance_value = "False"
-        if cell_id in label_nuclei_dist:
-            distance_value = "True"
         # Ajouter la circularité et l'excentricité pour le label courant
         properties = label_properties.get(cell_id, {'Circularity': "None", 'Eccentricity':  "None", 'Orientation': "None"})
-        row.extend([population, protein_name, properties['Circularity'], properties['Eccentricity'], properties['Orientation'], distance_value, center[2], center[1]])
+        row.extend([population, protein_name, properties['Circularity'], properties['Eccentricity'], properties['Orientation'], center[2], center[1]])
         data.append(row)
 
     df = pd.DataFrame(data, columns=columns)
@@ -156,7 +152,6 @@ def generate_excel(df, columns, filename):
         "Circularity": 15,
         "Eccentricity": 15,
         "Orientation": 15,
-        "Away from bead": 15,
         "Center X": 13,
         "Center Y": 13
     }
@@ -523,6 +518,7 @@ def main_find_pop(current_project):
     global json_path, project_path
     global cellpose_max_th, cellpose_min_th, cellpose_diam_value, cellpose_max_th_phalo, cellpose_min_th_phalo, cellpose_diam_value_phalo
 
+    global shape_img
     #Global variable
     resources_path = os.environ.get('FLASK_RESOURCES_PATH', os.getcwd())
     json_path = os.path.join(resources_path, 'python', 'server', 'json') 
@@ -566,12 +562,44 @@ def main_find_pop(current_project):
         with open(json_file_path, 'r') as f:
             tag_center = json.load(f) 
 
+    for image in images_list:
+        isolate_and_segment_phalo(image, project_info, tags_info, tag_center)
+    create_full_img_with_phalo(project_info)
+    print("done here")
+    return
 
+    #Merged image finding centers
+    # merged_img = imageio.volread(os.path.join(project_path, "merged_img.tif"))
+    # label = imageio.volread(os.path.join(project_path, "label_merged_img.tif"))
+    # center_bead = (624, 624)
+    # visualize_all(label, center_bead)
+    # plt.show()
+    #max_label_projection(label)
+    #imageio.imwrite(os.path.join(project_path, "proj2D.tif"), max_label_projection(label))
+
+
+    
+    # #tag_center["merged_img"] = segmentation_tool.get_center_of_labels(label_img)
+    # label_img = imageio.volread(os.path.join(project_path, "label_merged_img.tif"))
+    # shape_img = label_img.shape
+    # keep_dist_nuclei(label_img, tag_center, project_info)
+    # label = imageio.volread(os.path.join(project_path, "updt_merge_label.tif"))
+    # center_bead = (624, 624)
+    # visualize_all(label, center_bead)
+    # plt.show()
+    # # utils.save_tag_centers(tag_center, project_path)
+    # #match_phalo_dico = match_phalo_nuclei(tag_center, project_info, 0.75)
+    # #print(match_phalo_dico)
+            
+
+    #return #TO remove, the code below is the one to generatee the excel file.
     #Generate csv
+    label_img = imageio.volread(os.path.join(project_path, "label_merged_img.tif"))
+    shape_img = label_img.shape
     threshold_distance = project_info.get("threshold_distance_pop", 0.05) #Set default value
     z_weight = project_info.get("z_weight_pop", 0.75)  #Set default value
     threshold_distance, z_weight = float(threshold_distance), float(z_weight) 
-    generate_csv(threshold_distance, z_weight, tag_center, project_info)
+    generate_csv(threshold_distance, z_weight, tag_center)
 
     #Complete program
     project_info["threshold_distance_pop"] = f"{threshold_distance}"
@@ -582,13 +610,8 @@ def main_find_pop(current_project):
     with open(file_path, 'w') as file:
         json.dump(data_project_prepared, file, indent=4)
 
-    #Create the complete finale image
-    create_full_img_with_phalo(project_info)
-
     utils.save_tag_centers(tag_center, project_path)
-    utils.modify_running_process("Done population process and phalloidin segmentation!", json_path)
-
-    
+    utils.modify_running_process("Done population process", json_path)
 
     # except Exception as e:
     #     utils.modify_running_process("Error while running the matching population process", json_path)

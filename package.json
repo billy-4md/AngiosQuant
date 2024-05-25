@@ -12,7 +12,7 @@
   "author": "Xavier Dekeme",
   "license": "ISC",
   "devDependencies": {
-    "electron": "^29.3.1",
+    "electron": "^29.4.1",
     "electron-builder": "^22.14.13"
   },
   "build": {
