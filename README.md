@@ -52,7 +52,7 @@ This part is necessary if you need to run the semi-automatic algorithm. It allow
 - Modify values in the generated Excel to experiment with different analysis configurations.
 
 ## Getting Started
-To get started with PopSeg, navigate to the `Settings` tab and configure the necessary settings. Create a new project in the `Project` tab and upload your images. Depending on your settings, you may need to set control points manually in the images for accurate processing.
+XXXXXXXX EXPLAIN HOW TO USE THE APP HERE (DOWNLOAD OR TEST)
 
 ## Output
 The tool can generate images and Excel files depending on the selected options:
