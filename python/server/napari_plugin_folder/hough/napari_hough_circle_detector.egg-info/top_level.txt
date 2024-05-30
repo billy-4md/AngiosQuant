@@ -1,1 +1,0 @@
-napari_hough_circle_detector
