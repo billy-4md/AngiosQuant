@@ -23,6 +23,8 @@ In the "master" branch, all the code of this project is available. And it is str
   - "html": Contain all the HTML file for the application.
   - "js": Contain all the JavaScript file for the application, creating the requests on the Flask server to run the python code.
   - "css": COntain all the file for the style of the application.
+ 
+In the "exe_app" branch, you can find the exe file to install the application on your machine.
 
 ## Features
 This application offers a variety of features organized into several key components of the application:
