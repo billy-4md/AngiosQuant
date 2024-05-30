@@ -1,0 +1,14 @@
+{
+    "center_bead1": "643.0, 585.0",
+    "center_bead2": "637.0, 573.0",
+    "cropping_value": "400",
+    "img1_processing": "10, 15",
+    "img2_processing": "20, 15",
+    "last_merging_run": "Matching population",
+    "phalo_tag": "4",
+    "radius_bead2": "437.8",
+    "rotation_factor": "-3.9921916537117834",
+    "scale_factor": "1.133379209764352",
+    "threshold_distance_pop": "0.1",
+    "z_weight_pop": "0.75"
+}
