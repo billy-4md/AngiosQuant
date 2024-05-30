@@ -51,8 +51,18 @@ This part is necessary if you need to run the semi-automatic algorithm. It allow
 - Each project contains a "Show Project Info" button, providing insights into the values obtained from the program's run.
 - Modify values in the generated Excel to experiment with different analysis configurations.
 
-## Getting Started
-XXXXXXXX EXPLAIN HOW TO USE THE APP HERE (DOWNLOAD OR TEST)
+## Configuration SetUp
+- Configuration machine: Windows x64bit with a minimum of 32GB of RAM.
+- Localhost 8000 port should be open for the python Flask server.
+- To open the generated Excel file, Excel must be installed on the machine.
+
+## Start the Application
+2 different options are possible:
+- First: Download the "SetUp.exe" and execute it and the machine to install the application. Don't forget to select "add a shortcut on the Desktop" if needed.
+- Second: Download the whole folder in the master branch and follow the instruction on the next section (Starting the application with npm)
+
+# Stration the application with npm
+ 
 
 ## Output
 The tool can generate images and Excel files depending on the selected options:
