@@ -23,12 +23,12 @@
     },
     "configuration": {
         "saveAllImages": true,
-        "automaticMerging": false,
+        "automaticMerging": true,
         "useTagCenter": true
     },
     "populations": {},
     "croppingValue": 400,
-    "project_name": "Auto_merging",
+    "project_name": "result_thesis",
     "phaloTag": "4",
-    "process": "Find population process running"
+    "process": "Done population process"
 }

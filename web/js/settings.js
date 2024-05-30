@@ -387,7 +387,7 @@ function fillFormWithData(data) {
     // Populations
     if (data.populations) {
         Object.entries(data.populations).forEach((pop, index) => {
-            addPopulation(); // Ajouter des champs supplémentaires si nécessaire
+            addPopulation(); 
             const populationContainers = document.querySelectorAll('#populationsContainer .population-entry');
             const lastPopulationContainer = populationContainers[populationContainers.length - 1];
             pop[1].forEach((tag, tagIndex) => {

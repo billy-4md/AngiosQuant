@@ -114,10 +114,6 @@ def save_image_function(image, image_name, project_path):
     imageio.volwrite(os.path.join(project_path, image_name), image)
 
 def stringify_keys(data):
-    """
-    Convertit récursivement toutes les clés de dictionnaire en chaînes de caractères.
-    Gère également les listes contenant des dictionnaires.
-    """
     if isinstance(data, dict):
         return {str(key): stringify_keys(value) for key, value in data.items()}
     elif isinstance(data, list):

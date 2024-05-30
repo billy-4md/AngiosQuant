@@ -175,12 +175,10 @@ def reassign_labels(labels_all_slices, df):
 
 def reassign_labels_sequentially(labels):
     unique_labels = np.unique(labels)
-    unique_labels = unique_labels[unique_labels != 0]  # Exclure le label 0 s'il représente le fond
-    
-    # Créer un dictionnaire pour mapper les anciens labels vers les nouveaux
+    unique_labels = unique_labels[unique_labels != 0] 
+
     label_mapping = {old_label: new_label for new_label, old_label in enumerate(unique_labels, start=1)}
     
-    # Appliquer le mappage pour réassigner les labels
     new_labels = np.copy(labels)
     for old_label, new_label in label_mapping.items():
         new_labels[labels == old_label] = new_label
@@ -212,19 +210,6 @@ def get_normalized_center_of_labels(label_image):
     return normalized_centers
 
 def unify_labels(image1, image2, match_dico):
-    """
-    Applique les mêmes labels entre deux images segmentées en fonction du dictionnaire `match_dico`.
-
-    Args:
-    - image1: Première image segmentée avec des labels numériques.
-    - image2: Deuxième image segmentée avec des labels numériques.
-    - match_dico: Dictionnaire de correspondance entre les labels de `image1` et `image2`.
-
-    Returns:
-    - image1_sync: Première image synchronisée avec les nouveaux labels.
-    - image2_sync: Deuxième image synchronisée avec les nouveaux labels.
-    """
-    # Trouver tous les labels uniques dans les deux images
     image1_sync = np.zeros_like(image1)
     image2_sync = np.zeros_like(image2)
 

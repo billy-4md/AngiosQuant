@@ -28,7 +28,11 @@ def launch_napari_def(image_paths, project_path, control_points):
     except Exception as e:
         print(f"Error while loading the settings file: {e}")
         return
-    
+
+    viewer = napari.Viewer()
+    points_data1 = load_points(control_point1)
+    points_data2 = load_points(control_point2)
+
     try:
         if not os.path.exists(control_point1):
             with open(control_point1, 'w') as f:
@@ -41,10 +45,6 @@ def launch_napari_def(image_paths, project_path, control_points):
     except Exception as e:
         print(f"Error creating control points files: {e}")
         return
-
-    viewer = napari.Viewer()
-    points_data1 = load_points(control_point1)
-    points_data2 = load_points(control_point2)
 
     for image_path in image_paths:
         if image_path.split(".")[-1].lower() == "czi":
@@ -84,27 +84,22 @@ def launch_napari_def(image_paths, project_path, control_points):
     
 
     # Fonction pour enregistrer les points de la première couche
-    def save_points1():
+    def save_points():
         np.savetxt(control_point1, points_layer1.data, delimiter=',')
-        print("Control Points saved for Image 1!")
-
-    # Fonction pour enregistrer les points de la deuxième couche
-    def save_points2():
         np.savetxt(control_point2, points_layer2.data, delimiter=',')
-        print("Control Points saved for Image 2!")
+        print("Control Points saved!")
 
     # Fonction pour afficher un message dans le viewer
     def show_message(message):
         """Affiche un message temporaire dans le viewer."""
-        viewer.status = message  # Affiche un message dans la barre d'état
+        viewer.status = message  
         viewer.text_overlay.text = message
 
     # Ajouter des boutons de sauvegarde dans le viewer
     @viewer.bind_key('s')
     def save_all(viewer):
         """Enregistre les points de contrôle."""
-        save_points1()
-        save_points2()
+        save_points()
         show_message("Control points have been saved!")
 
 

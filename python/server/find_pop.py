@@ -81,22 +81,23 @@ def calculate_properties(projection_2d, image_center):
 
     return circularity, eccentricity, angle_deg
 
-def is_close(center1, center2, percent, z_weight):
+def is_close(center1, center2, percent, z_weight, shape_img):
     threshold = percent * shape_img[1] 
     distance = np.sqrt(((center1[0]*z_weight - center2[0]*z_weight)**2) + (center1[1] - center2[1])**2 + (center1[2] - center2[2])**2)
     return distance <= threshold
 
-def generate_csv(threshold, z_weight, tag_center):
+def generate_csv(threshold, z_weight, tag_center, project_info):
     with open(os.path.join(json_path, "proteins_name.json"), "r") as f:
         protein_names = json.load(f)
 
     tags = [tag for tag in tag_center.keys() if tag != "merged_img" and tag != "image1" and tag != "image2" and tag != "phalo"]
-    columns = ["CellID"] + tags + ["Population", "Protein Name", "Circularity", "Eccentricity", "Orientation", "Center X", "Center Y"]
+    columns = ["CellID"] + tags + ["Population", "Protein Name", "Circularity", "Eccentricity", "Orientation", "Away from Bead", "Center X", "Center Y"]
     data = []
     false_positive_cells = []
 
     label_img = imageio.volread(os.path.join(project_path, 'label_merged_img.tif'))
     label_properties = project_and_analyze_labels(label_img)
+    label_dist_list = keep_dist_nuclei(label_img, tag_center, project_info, label_img.shape)
 
     for cell_id, center in enumerate(tag_center["merged_img"].values(), start=1):
         row = [cell_id]
@@ -104,7 +105,7 @@ def generate_csv(threshold, z_weight, tag_center):
 
         for tag in tags:
             if tag in tag_center:
-                match = any(is_close(center, tag_center[tag][cell], threshold, z_weight) for cell in tag_center[tag])
+                match = any(is_close(center, tag_center[tag][cell], threshold, z_weight, label_img.shape) for cell in tag_center[tag])
                 presence = 1 if match else 0
                 row.append(presence)
                 presence_counter += presence
@@ -120,9 +121,13 @@ def generate_csv(threshold, z_weight, tag_center):
             population = ''.join([tag[-1] for tag in tags if row[columns.index(tag)] == 1])
             protein_name = protein_names.get(population, "")
 
+        dist_value = "False"
+        if cell_id in label_dist_list:
+            dist_value = "True"
+
         # Ajouter la circularité et l'excentricité pour le label courant
         properties = label_properties.get(cell_id, {'Circularity': "None", 'Eccentricity':  "None", 'Orientation': "None"})
-        row.extend([population, protein_name, properties['Circularity'], properties['Eccentricity'], properties['Orientation'], center[2], center[1]])
+        row.extend([population, protein_name, properties['Circularity'], properties['Eccentricity'], properties['Orientation'], dist_value, center[2], center[1]])
         data.append(row)
 
     df = pd.DataFrame(data, columns=columns)
@@ -152,6 +157,7 @@ def generate_excel(df, columns, filename):
         "Circularity": 15,
         "Eccentricity": 15,
         "Orientation": 15,
+        "Away from Bead": 15,
         "Center X": 13,
         "Center Y": 13
     }
@@ -164,7 +170,7 @@ def generate_excel(df, columns, filename):
 
     for column_name, width in column_widths.items():
         if column_name in df.columns:
-            col_idx = df.columns.get_loc(column_name) + 1  # get_loc est zéro-indice, Excel est un indice basé sur 1
+            col_idx = df.columns.get_loc(column_name) + 1  
             ws.column_dimensions[ws.cell(row=1, column=col_idx).column_letter].width = width
 
     # Enregistrer le fichier
@@ -261,8 +267,6 @@ def apply_translation_img_phalo(img, center_img, scaling_factor, rotation_angle,
     return img_mod
 
 def process_image(image, project_info, tags_info, tag_center):
-    global shape_img
-
     cropped_value = tags_info["croppingValue"]
     up_slice_to_remove1 = tags_info["image1"]["upperLayersToRemove"]
     down_slice_to_remove1 = tags_info["image1"]["lowerLayersToRemove"]
@@ -282,7 +286,6 @@ def process_image(image, project_info, tags_info, tag_center):
             tag_img = utils.isolate_and_normalize_channel(wavelength, image, tags_info)
             if image == "image1":
                 tag_img_cropped = tag_img[up_slice_to_remove1:-down_slice_to_remove1, cropped_value:-cropped_value, cropped_value:-cropped_value]
-                shape_img = tag_img_cropped.shape
                 tag_img_cropped = apply_translation_img(tag_img_cropped, center_img1, scaling_factor, rotation_angle)
 
             elif image == "image2":
@@ -295,8 +298,6 @@ def process_image(image, project_info, tags_info, tag_center):
 
 """-------------------------PHALLOIDIN FUNCTIONS--------------------------"""
 def isolate_and_segment_phalo(image, project_info, tags_info, tag_center):
-    global shape_img
-
     cropped_value = tags_info["croppingValue"]
     up_slice_to_remove1 = tags_info["image1"]["upperLayersToRemove"]
     down_slice_to_remove1 = tags_info["image1"]["lowerLayersToRemove"]
@@ -321,14 +322,13 @@ def isolate_and_segment_phalo(image, project_info, tags_info, tag_center):
             utils.save_image_function(label_cropped, "label_phalloidin_cropped.tif", project_path)
             utils.save_image_function(labels, "label_phalloidin_original.tif", project_path)
 
-def check_center_distance(center, project_info):
-    radius = float(project_info["radius_bead2"][0])
+def check_center_distance(center, project_info, shape_img):
+    radius = float(project_info["radius_bead2"])
     center_img = (shape_img[1]//2, shape_img[1]//2)  
     distance = sqrt((center[1] - center_img[0])**2 + (center[2] - center_img[1])**2)
     threshold = 0
 
     if distance > (radius - radius * threshold):
-        print(distance)
         return True
     else:
         return False
@@ -359,16 +359,16 @@ def filter_labels(label_img, labels_to_keep):
     
     return filtered_img
 
-def keep_dist_nuclei(label_img, tag_center, project_info):
+def keep_dist_nuclei(label_img, tag_center, project_info, shape):
     merged_center = tag_center["merged_img"]
     label_to_keep= []
 
     for label_nuc, center_nuc in merged_center.items():
-        if check_center_distance(center_nuc, project_info):
+        if check_center_distance(center_nuc, project_info, shape):
             label_to_keep.append(int(label_nuc))
 
     new_img = filter_labels(label_img, label_to_keep)
-    utils.save_image_function(new_img, "label_dist_nuclei.tif", project_path)
+    #utils.save_image_function(new_img, "label_dist_nuclei.tif", project_path)
     return label_to_keep
     
 
@@ -518,7 +518,6 @@ def main_find_pop(current_project):
     global json_path, project_path
     global cellpose_max_th, cellpose_min_th, cellpose_diam_value, cellpose_max_th_phalo, cellpose_min_th_phalo, cellpose_diam_value_phalo
 
-    global shape_img
     #Global variable
     resources_path = os.environ.get('FLASK_RESOURCES_PATH', os.getcwd())
     json_path = os.path.join(resources_path, 'python', 'server', 'json') 
@@ -561,45 +560,12 @@ def main_find_pop(current_project):
         json_file_path = os.path.join(project_path, 'tag_centers.json')
         with open(json_file_path, 'r') as f:
             tag_center = json.load(f) 
-
-    for image in images_list:
-        isolate_and_segment_phalo(image, project_info, tags_info, tag_center)
-    create_full_img_with_phalo(project_info)
-    print("done here")
-    return
-
-    #Merged image finding centers
-    # merged_img = imageio.volread(os.path.join(project_path, "merged_img.tif"))
-    # label = imageio.volread(os.path.join(project_path, "label_merged_img.tif"))
-    # center_bead = (624, 624)
-    # visualize_all(label, center_bead)
-    # plt.show()
-    #max_label_projection(label)
-    #imageio.imwrite(os.path.join(project_path, "proj2D.tif"), max_label_projection(label))
-
-
-    
-    # #tag_center["merged_img"] = segmentation_tool.get_center_of_labels(label_img)
-    # label_img = imageio.volread(os.path.join(project_path, "label_merged_img.tif"))
-    # shape_img = label_img.shape
-    # keep_dist_nuclei(label_img, tag_center, project_info)
-    # label = imageio.volread(os.path.join(project_path, "updt_merge_label.tif"))
-    # center_bead = (624, 624)
-    # visualize_all(label, center_bead)
-    # plt.show()
-    # # utils.save_tag_centers(tag_center, project_path)
-    # #match_phalo_dico = match_phalo_nuclei(tag_center, project_info, 0.75)
-    # #print(match_phalo_dico)
             
-
-    #return #TO remove, the code below is the one to generatee the excel file.
     #Generate csv
-    label_img = imageio.volread(os.path.join(project_path, "label_merged_img.tif"))
-    shape_img = label_img.shape
     threshold_distance = project_info.get("threshold_distance_pop", 0.05) #Set default value
     z_weight = project_info.get("z_weight_pop", 0.75)  #Set default value
     threshold_distance, z_weight = float(threshold_distance), float(z_weight) 
-    generate_csv(threshold_distance, z_weight, tag_center)
+    generate_csv(threshold_distance, z_weight, tag_center, project_info)
 
     #Complete program
     project_info["threshold_distance_pop"] = f"{threshold_distance}"
@@ -609,6 +575,8 @@ def main_find_pop(current_project):
     data_project_prepared = utils.prepare_data_for_json(project_info)
     with open(file_path, 'w') as file:
         json.dump(data_project_prepared, file, indent=4)
+
+    create_full_img_with_phalo(project_info)
 
     utils.save_tag_centers(tag_center, project_path)
     utils.modify_running_process("Done population process", json_path)
