@@ -51,17 +51,26 @@ This part is necessary if you need to run the semi-automatic algorithm. It allow
 - Each project contains a "Show Project Info" button, providing insights into the values obtained from the program's run.
 - Modify values in the generated Excel to experiment with different analysis configurations.
 
-## Configuration SetUp
-- Configuration machine: Windows x64bit with a minimum of 32GB of RAM.
-- Localhost 8000 port should be open for the python Flask server.
-- To open the generated Excel file, Excel must be installed on the machine.
+## Configuration Setup
+### System Requirements
+- **Operating System:** Windows 64-bit
+- **RAM:** Minimum 32GB
+- **Network:** Ensure that port 8000 is open for the Python Flask server.
+- **Software Requirements:** Microsoft Excel must be installed to open generated Excel files.
 
-## Start the Application
-2 different options are possible:
-- First: Download the "SetUp.exe" and execute it and the machine to install the application. Don't forget to select "add a shortcut on the Desktop" if needed.
-- Second: Download the whole folder in the master branch and follow the instruction on the next section (Starting the application with npm)
+## Installation Methods
+### Method 1: Using the Executable
 
-# Stration the application with npm
+1. Download `SetUp.exe` from the releases section.
+2. Execute the downloaded file to install the application.
+   - During installation, you can choose to add a desktop shortcut.
+
+### Method 2: Using Source Code
+1. Download the code folder in the master branch
+2. Install ["Node.js"](https://nodejs.org/en/download/package-manager)
+3. Run: npm install
+4. Run: npm start to laucnh the application
+
  
 
 ## Output
