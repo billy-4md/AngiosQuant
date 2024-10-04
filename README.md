@@ -80,7 +80,7 @@ The tool can generate images and Excel files depending on the selected options:
 - Open images in the Napari viewer or view Excel files directly from the project page.
 
 ## Notes
-NVM (Node version manager) : enable to install a certain version of Node.js
-NPM : the standard package manager for Node.js   ; project should have package.json file
+- NVM (Node version manager) : enable to install a certain version of Node.js
+- NPM : the standard package manager for Node.js   ; project should have package.json file
 
 
